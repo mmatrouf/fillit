@@ -6,7 +6,7 @@
 /*   By: mmatrouf <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/22 16:32:07 by mmatrouf          #+#    #+#             */
-/*   Updated: 2019/06/26 21:55:36 by mmatrouf         ###   ########.fr       */
+/*   Updated: 2019/07/04 00:34:43 by mmatrouf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "fillit.h"
@@ -35,7 +35,7 @@ int		ft_test(int fd, t_tetrisa *t)
 	}
 	if (rd == 20 && j == 4)
 		return(-1);
-	return (((rd == 20 && j == 4) || (rd == 21 && j == 5)) ? 1 : 0);
+	return (((rd == 20) || (rd == 21)));
 
 }
 
@@ -65,55 +65,40 @@ int ft_count(t_tetrisa t)
 	return (0);
 }
 
-/*int ft_form(t_tetrisa t)
-{
-	int i;
-	int j;
-
-	i = 0;
-	while(i < 4)
-	{
-		j = 0;
-		while(j < 4)
-		{
-			if (t.tetri[i][j] == '#')
-			{
-				if (t.tetri[i][j + (j < 3)] != '#' && t.tetri[i + (i < 3)][j] != '#')
-					return (0);
-			}
-			j++;
-		}
-		i++;
-	}
-	return (1);
-}*/
-
 int ft_form(t_tetrisa t)
 {
 	int i;
 	int j;
+	int bond;
 
 	i = -1;
-	while(++i < 4)
+	bond = 0;
+	if (ft_count(t))
+	while (++i < 4)
 	{
 		j = -1;
 		while(++j < 4)
 			if (t.tetri[i][j] == '#')
 			{
-				if(i == 0 && j == 0)
-					if (t.tetri[i][j + 1] != '#' && t.tetri[i + 1][j] != '#')
-						return (0);
-				if (i == 0 && j != 0)
-					if (t.tetri[i][j + (j < 3)] != '#' && t.tetri[i + (i < 3)][j] != '#' && t.tetri[i][j - 1] != '#')
-						return (0);
-				if (i != 0 && j == 0)
-					if (t.tetri[i][j + (j < 3)] != '#' && t.tetri[i + (i < 3)][j] != '#' && t.tetri[i - 1][j] != '#')
-						return (0);
-				if (i != 0 && j != 0)
-					if (t.tetri[i][j + (j < 3)] != '#' && t.tetri[i + (i < 3)][j] != '#' && t.tetri[i - 1][j] != '#'
-						   	&& t.tetri[i][j - 1] != '#')
-						return (0);
+				if (j > 0 && t.tetri[i][j - 1] == '#')
+					bond++;
+				if (j < 3 && t.tetri[i][j + 1] == '#')
+					bond++;
+				if (i > 0 && t.tetri[i - 1][j] == '#')
+					bond++;
+				if (i < 3 && t.tetri[i + 1][j] == '#')
+					bond++;
 			}
 	}
+	return (bond == 6 || bond == 8);
+}
+
+int		ft_stock(int fd, t_file *t)
+{
+	int i;
+
+	i = 0;
+	while (ft_test(fd, &t->file[i]) && ft_form(t->file[i]))
+		i++;
 	return (1);
 }
