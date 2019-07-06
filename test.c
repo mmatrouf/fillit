@@ -6,10 +6,11 @@
 /*   By: mmatrouf <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/22 16:32:07 by mmatrouf          #+#    #+#             */
-/*   Updated: 2019/07/04 00:34:43 by mmatrouf         ###   ########.fr       */
+/*   Updated: 2019/07/06 02:22:53 by mmatrouf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "fillit.h"
+#include <stdio.h>
 
 
 int		ft_test(int fd, t_tetrisa *t)
@@ -36,7 +37,6 @@ int		ft_test(int fd, t_tetrisa *t)
 	if (rd == 20 && j == 4)
 		return(-1);
 	return (((rd == 20) || (rd == 21)));
-
 }
 
 int ft_count(t_tetrisa t)
@@ -96,9 +96,21 @@ int ft_form(t_tetrisa t)
 int		ft_stock(int fd, t_file *t)
 {
 	int i;
+	int a;
 
-	i = 0;
-	while (ft_test(fd, &t->file[i]) && ft_form(t->file[i]))
-		i++;
+	i = -1;
+
+	while (t->count < 26 && (a = ft_test(fd, &t->file[++i])) != 0) 
+	{
+		printf("//%d//\n", a);
+		if (!ft_form(t->file[i]))
+			return (0);
+		t->count++;
+		if (a == -1)
+			break;
+	}
+	
+	if ((t->count == 26 && a != -1) || a == 0)
+		return (0);
 	return (1);
 }

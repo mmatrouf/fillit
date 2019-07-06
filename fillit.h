@@ -11,6 +11,7 @@ typedef struct	s_tetrisa
 typedef struct	s_file
 {
 	t_tetrisa	file[26];
+	int			count;
 }				t_file;
 
 int		ft_stock(int fd, t_file *t);

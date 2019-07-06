@@ -6,7 +6,7 @@
 /*   By: mmatrouf <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/23 19:12:44 by mmatrouf          #+#    #+#             */
-/*   Updated: 2019/06/30 21:18:30 by mmatrouf         ###   ########.fr       */
+/*   Updated: 2019/07/06 02:22:56 by mmatrouf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,28 +26,21 @@ int main(int ac, char **av)
 	i = 0;
 
 	fd = open(av[1], O_RDONLY);
-
 	a = ft_stock(fd, &h);
-	while (i < 26)
+	printf("%d\n", h.count);
+
+	while (i < h.count)
 	{
 		j = 0;
-		while(h.file->tetri[j])
+		while (j < 4)		
 		{
-			printf("%s", h.file->tetri[j]);
+			printf("%s\n", h.file[i].tetri[j]);
 			j++;
 		}
+		printf("%d\n", a);
 		i++;
 	}
-	
-	/*while ((a = ft_test(fd, &h)) > 0 && (a = ft_count(h)) && (b = ft_form(h)))
-	{	
-		i = 0;
-		while (i < 4)
-		{
-		printf("%s\n", h.tetri[i]);
-		i++;
-		}
-	}*/
-//	printf("\na = %d||b = %d\n", a, b);
+	if (a == 0)
+		printf("//this is not a valid file//\n");
 	return (0);
 }
