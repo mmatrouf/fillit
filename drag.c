@@ -1,27 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   drag.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmatrouf <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/23 19:12:44 by mmatrouf          #+#    #+#             */
-/*   Updated: 2019/07/14 16:19:52 by mmatrouf         ###   ########.fr       */
+/*   Created: 2019/07/07 01:14:52 by mmatrouf          #+#    #+#             */
+/*   Updated: 2019/07/07 01:42:50 by mmatrouf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <fcntl.h>
 #include "fillit.h"
 
-int main()
+void	ft_upperleft(t_file *h)
 {
-	char **map = NULL;
+	int x;
+	int y;
 	int i;
+	int j;
 
 	i = -1;
-	map = ft_map_new(4);
-	while (map[++i])	
-		printf("%s\n", map[i]);
-	return (0);
+	while (++i < h->count)
+	{
+		j = -1;
+		x = 3;
+		y = 3;
+		while (++j < 4)
+		{
+			if(h->file[i].x[j] < x)
+				x = h->file[i].x[j];
+			if (h->file[i].y[j] < y)
+				y = h->file[i].y[j];
+		}
+		j = -1;
+		while (++j < 4)
+		{
+			h->file[i].x[j] = h->file[i].x[j] - x; 
+			h->file[i].y[j] = h->file[i].y[j] - y;
+		}
+	}
 }

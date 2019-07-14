@@ -5,7 +5,10 @@
 
 typedef struct	s_tetrisa
 {
+	char	a;
 	char	tetri[4][5];
+	int		x[4];
+	int		y[4];
 }				t_tetrisa;
 
 typedef struct	s_file
@@ -14,6 +17,11 @@ typedef struct	s_file
 	int			count;
 }				t_file;
 
+
+char 	**ft_add_tet(char **map, t_tetrisa h, int size);
+char	**ft_map_new(int size);
+void	ft_upperleft(t_file *h);
+void	ft_coor(t_tetrisa *t);
 int		ft_stock(int fd, t_file *t);
 int		ft_form(t_tetrisa t);
 int		ft_test(int fd, t_tetrisa *t);

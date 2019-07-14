@@ -6,11 +6,10 @@
 /*   By: mmatrouf <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/22 16:32:07 by mmatrouf          #+#    #+#             */
-/*   Updated: 2019/07/06 02:22:53 by mmatrouf         ###   ########.fr       */
+/*   Updated: 2019/07/14 16:36:48 by mmatrouf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "fillit.h"
-#include <stdio.h>
 
 
 int		ft_test(int fd, t_tetrisa *t)
@@ -65,6 +64,27 @@ int ft_count(t_tetrisa t)
 	return (0);
 }
 
+void	ft_coor(t_tetrisa *t)
+{
+	int i;
+	int j;
+	int k;
+
+	k = 0;
+	i = -1;
+	while (++i < 4)
+	{
+		j = -1;
+		while (++j < 4)
+			if(t->tetri[i][j] == '#')
+			{
+				t->x[k] = i;
+				t->y[k] = j;
+				k++;
+			}
+	}
+}
+
 int ft_form(t_tetrisa t)
 {
 	int i;
@@ -99,17 +119,16 @@ int		ft_stock(int fd, t_file *t)
 	int a;
 
 	i = -1;
-
 	while (t->count < 26 && (a = ft_test(fd, &t->file[++i])) != 0) 
 	{
-		printf("//%d//\n", a);
+		t->file[i].a = 'A' + i;
+		ft_coor(&t->file[i]);
 		if (!ft_form(t->file[i]))
 			return (0);
 		t->count++;
 		if (a == -1)
 			break;
 	}
-	
 	if ((t->count == 26 && a != -1) || a == 0)
 		return (0);
 	return (1);
